@@ -1,0 +1,31 @@
+syntax = "proto3";
+
+// Каждой категории присваиваем числовой индентификатор
+enum BookCategory {
+    MYSTERY = 0;
+    SCIENCE_FICTION = 1;
+    SELF_HELP = 2;
+}
+
+// Определяем API запросы
+message RecommendationRequest {
+    int32 user_id = 1;
+    BookCategory category = 2;
+    int32 max_results = 3;
+}
+
+// Определяем новый тип для рекомендации книги
+message BookRecommendation {
+    int32 id = 1;
+    string title = 2;
+}
+
+// Описываем отклик микросервиса
+message RecommendationResponse {
+    repeated BookRecommendation recommendations = 1;
+}
+
+// Определяем API метод
+service Recommendations {
+    rpc Recommend (RecommendationRequest) returns (RecommendationResponse);
+}
